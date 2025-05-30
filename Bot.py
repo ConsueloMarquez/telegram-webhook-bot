@@ -10,7 +10,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.filters import CommandStart
 
-API_TOKEN = os.getenv("TELEGRAM_TOKEN")  # Храним токен в переменной окружения
+API_TOKEN = os.getenv("7910296994:AAEiyHNqHJ0mSsQk5g4t09Gx-FKqPWQ3OLI")  # Храним токен в переменной окружения
 
 # Webhook URL (от Render)
 WEBHOOK_URL = os.getenv("https://telegram-webhook-bot-r0ws.onrender.com")
