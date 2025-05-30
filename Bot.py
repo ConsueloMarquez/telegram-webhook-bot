@@ -13,7 +13,7 @@ from aiogram.filters import CommandStart
 API_TOKEN = os.getenv("TELEGRAM_TOKEN")  # Храним токен в переменной окружения
 
 # Webhook URL (от Render)
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+WEBHOOK_URL = os.getenv("https://telegram-webhook-bot-r0ws.onrender.com")
 
 # Инициализация бота и хранилища
 bot = Bot(token=API_TOKEN)
