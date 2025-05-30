@@ -10,12 +10,16 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.filters import CommandStart
 
-API_TOKEN = os.getenv("7910296994:AAEiyHNqHJ0mSsQk5g4t09Gx-FKqPWQ3OLI")  # Храним токен в переменной окружения
+# ✅ Получаем токен и URL из переменных окружения
+API_TOKEN = os.getenv("BOT_TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
-# Webhook URL (от Render)
-WEBHOOK_URL = os.getenv("https://telegram-webhook-bot-r0ws.onrender.com")
+if not API_TOKEN:
+    raise ValueError("❌ Переменная окружения BOT_TOKEN не установлена.")
+if not WEBHOOK_URL:
+    raise ValueError("❌ Переменная окружения WEBHOOK_URL не установлена.")
 
-# Инициализация бота и хранилища
+# Инициализация
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
@@ -32,7 +36,6 @@ class Form(StatesGroup):
     apple = State()
     road = State()
 
-# Обработка старта
 @dp.message(CommandStart())
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.set_state(Form.tree)
@@ -71,7 +74,7 @@ async def answer_road(message: types.Message, state: FSMContext):
     await message.answer(summary)
     await state.clear()
 
-# Aiohttp приложение для Webhook
+# Обработчик webhook'а
 async def handle_webhook(request):
     body = await request.json()
     update = types.Update(**body)
@@ -85,7 +88,6 @@ async def on_shutdown(app):
     await bot.delete_webhook()
 
 async def main():
-    # Настройка приложения
     app = web.Application()
     app.router.add_post("/webhook", handle_webhook)
     app.on_startup.append(on_startup)
